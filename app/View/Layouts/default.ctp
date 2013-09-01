@@ -17,7 +17,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = __d('cake_dev', 'New Scribble');
+$cakeDescription = __d('cake_dev', 'Scribble 2.0');
 ?>
 <!DOCTYPE html>
 <html>
