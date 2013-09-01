@@ -30,20 +30,30 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css('cake.generic');
+		echo $this->Html->css("bootstrap.min");
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 
 		echo $this->Html->script("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
+		echo $this->Html->script("bootstrap.min");
 	?>
 </head>
 <body>
-	<div id="container">
-		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://www.yihangho.com'); ?></h1>
-		</div>
+	<div class="container">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+			    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+			      <span class="sr-only">Toggle navigation</span>
+			      <span class="icon-bar"></span>
+			      <span class="icon-bar"></span>
+			      <span class="icon-bar"></span>
+			    </button>
+			    <a class="navbar-brand" href="#"><?php echo $cakeDescription;?></a>
+			</div>
+		</nav>
+
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>

@@ -6,10 +6,10 @@ class ScribblesController extends AppController {
 		if ($this->request->is("post")) {
 			$this->Scribble->create();
 			if (($new_scribble = $this->Scribble->save($this->request->data, array("title", "body")))) {
-				$this->Session->setFlash("Scribble created!");
+				$this->Session->setFlash("Scribble created!", "default", array("class" => "alert alert-success"));
 				return $this->redirect(array("controller" => "Scribbles", "action" => "view", $new_scribble["Scribble"]["ukey"]));
 			} else {
-				$this->Session->setFlash("Scribble cannot be created. :(");
+				$this->Session->setFlash("Scribble cannot be created. :(", "default", array("class" => "alert alert-danger"));
 			}
 		}
 	}
@@ -31,9 +31,9 @@ class ScribblesController extends AppController {
 			$this->Scribble->id = $scribble["Scribble"]["id"];
 			$this->request->data["Scribble"]["ukey"] = $ukey;
 			if ($this->Scribble->save($this->request->data)) {
-				$this->Session->setFlash("Scribble updated");
+				$this->Session->setFlash("Scribble updated", "default", array("class" => "alert alert-success"));
 			} else {
-				$this->Session->setFlash("Scribble cannot be updated");
+				$this->Session->setFlash("Scribble cannot be updated", "default", array("class" => "alert alert-danger"));
 			}
 		}
 
