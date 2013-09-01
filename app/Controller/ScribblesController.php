@@ -37,11 +37,10 @@ class ScribblesController extends AppController {
 			}
 		}
 
-		if (!$this->request->data) {
-			$this->request->data = $scribble;
-		} else {
-			$scribble = $this->request->data;
-		}
+		//Current Scribble is loaded again as some data (like ukey and title) can be modified by the beforeSave hook
+		$this->request->data = $scribble = $this->Scribble->find("first", array(
+			"conditions" => array("Scribble.ukey" => $ukey)
+			));
 
 		$this->set("scribble", $scribble);
 	}
