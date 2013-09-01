@@ -7,20 +7,20 @@ var Preview = {
 	oldText: null,
 
 	Init: function () {
-		this.preview = document.getElementById("ScribblePreview");
-		this.buffer = document.getElementById("ScribbleBuffer");
+		this.preview = $("div#ScribblePreview");
+		this.buffer = $("div#ScribbleBuffer");
 	},
 
 	SwapBuffers: function () {
 		var buffer = this.preview, preview = this.buffer;
 		this.buffer = buffer; this.preview = preview;
-		buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
-		preview.style.position = ""; preview.style.visibility = "";
+		buffer.hide();
+		preview.show();
 	},
 
 	Update: function () {
-		if (!this.preview) this.preview = document.getElementById("ScribblePreview");
-		if (!this.buffer) this.buffer = document.getElementById("ScribbleBuffer");
+		if (!this.preview) this.preview = $("div#ScribblePreview");
+		if (!this.buffer) this.buffer = $("div#ScribbleBuffer");
 		if (this.timeout) {clearTimeout(this.timeout)}
 		this.timeout = setTimeout(this.callback,this.delay);
 	},
@@ -30,10 +30,10 @@ var Preview = {
 		if (this.mjRunning) return;
 		var text = document.getElementById("ScribbleInput").value;
 		if (text === this.oldtext) return;
-		this.buffer.innerHTML = this.oldtext = text;
+		this.buffer.html(this.oldtext = text);
 		this.mjRunning = true;
 		MathJax.Hub.Queue(
-			["Typeset",MathJax.Hub,this.buffer],
+			["Typeset",MathJax.Hub,this.buffer.get(0)],
 			["PreviewDone",this]
 		);
 	},
