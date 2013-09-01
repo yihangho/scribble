@@ -35,6 +35,8 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+
+		echo $this->Html->script("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
 	?>
 </head>
 <body>
