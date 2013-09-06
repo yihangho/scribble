@@ -1,6 +1,7 @@
 <?php
 class ScribblesController extends AppController {
-	public $helpers = array('Html', 'Form');
+	public $helpers = array('Html', 'Form', 'Js' => array('Jquery'));
+	public $components = array('RequestHandler');
 
 	public function add() {
 		if ($this->request->is("post")) {
@@ -15,6 +16,8 @@ class ScribblesController extends AppController {
 	}
 
 	public function view($ukey = null) {
+		$json_request = $this->isJsonRequest();
+
 		if (!$ukey) {
 			throw new NotFoundException("Scribble not available");
 		}
@@ -31,9 +34,17 @@ class ScribblesController extends AppController {
 			$this->Scribble->id = $scribble["Scribble"]["id"];
 			$this->request->data["Scribble"]["ukey"] = $ukey;
 			if ($this->Scribble->save($this->request->data)) {
-				$this->Session->setFlash("Scribble updated", "default", array("class" => "alert alert-success"));
+				if ($json_request) {
+					$this->set("status", "OK");
+				} else {
+					$this->Session->setFlash("Scribble updated", "default", array("class" => "alert alert-success"));
+				}
 			} else {
-				$this->Session->setFlash("Scribble cannot be updated", "default", array("class" => "alert alert-danger"));
+				if ($json_request) {
+					$this->set("status", "Error");
+				} else {
+					$this->Session->setFlash("Scribble cannot be updated", "default", array("class" => "alert alert-danger"));
+				}
 			}
 		}
 
@@ -43,5 +54,19 @@ class ScribblesController extends AppController {
 			));
 
 		$this->set("scribble", $scribble);
+
+		if ($json_request) {
+			if ($this->request->is("post") || $this->request->is("put")) {
+				$this->set("_serialize", array("status", "scribble"));
+			} else {
+				$this->set("message", "JSON not allowed");
+				$this->set("_serialize", array("message"));
+			}
+		}
+	}
+
+	private function isJsonRequest() {
+		//Check if current request ask for a JSON response
+		return (array_key_exists("REQUEST_URI", $_SERVER) && strtolower(substr($_SERVER['REQUEST_URI'], -5)) == '.json') || (array_key_exists("HTTP_ACCEPT", $_SERVER) && in_array("application/json", preg_split("/,\\s*/", strtolower($_SERVER["HTTP_ACCEPT"]))));
 	}
 }
