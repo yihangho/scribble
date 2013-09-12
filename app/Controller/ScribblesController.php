@@ -4,6 +4,7 @@ class ScribblesController extends AppController {
 	public $components = array('RequestHandler');
 
 	public function add() {
+		$this->set("title_for_layout", "New Scribble");
 		if ($this->request->is("post")) {
 			$this->Scribble->create();
 			if (($new_scribble = $this->Scribble->save($this->request->data, array("title", "body")))) {
@@ -51,6 +52,8 @@ class ScribblesController extends AppController {
 		$this->request->data = $scribble = $this->Scribble->find("first", array(
 			"conditions" => array("Scribble.ukey" => $ukey)
 			));
+
+		$this->set("title_for_layout", $scribble["Scribble"]["title"]);
 
 		$this->set("scribble", $scribble);
 
