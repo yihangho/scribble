@@ -31,6 +31,8 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css("bootstrap.min");
+		echo $this->Html->css('zocial');
+		echo $this->Html->css('style');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -38,6 +40,7 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 
 		echo $this->Html->script("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
 		echo $this->Html->script("bootstrap.min");
+		echo $this->Html->script("script");
 	?>
 </head>
 <body>

@@ -1,0 +1,3 @@
+div#popover-container a.zocial:not(:first-child) {
+    margin-left: 5px;
+}

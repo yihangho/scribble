@@ -1,8 +1,21 @@
 <?php
 echo $this->element("mathjax-js");
 ?>
-<script>var current_xhr = false;</script>
-<h1><?php echo $scribble["Scribble"]["title"];?></h1>
+<script>
+var current_xhr = false;
+var short_url = "<?php echo $scribble["Scribble"]["short_link"];?>";
+
+$(document).ready(function(){
+    $("button#share").popover({
+        html: true,
+        placement: "bottom",
+        content: '<div class="input-group" style="margin-bottom:3px;"><span class="input-group-addon">⌘+C</span><input type="text" class="form-control" onclick="this.select();" value="'+short_url+'"></div><div style="text-align: center;"><a class="zocial facebook icon" onclick="facebook_share();"></a><a class="zocial googleplus icon" onclick="googleplus_share();"></a><a class="zocial twitter icon" onclick="twitter_share();"></a></div>',
+        container: '#popover-container'
+    });
+});
+</script>
+<h1><?php echo $scribble["Scribble"]["title"];?><button id="share" class="btn btn-info pull-right" data-toggle="popover">Share</button></h1>
+<div id="popover-container"></div>
 <div id="ScribblePreview" class="well well-lg"><?php echo nl2br($scribble["Scribble"]["body"]);?></div>
 <div id="ScribbleBuffer" class="well well-lg" style="display:none;"></div>
 <div id="ajax_status"></div>
