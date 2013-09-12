@@ -1,13 +1,13 @@
 <div class="navbar navbar-default" id="latex-selector">
 	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-latex-selector-collapse">
 			<span class="sr-only">Toggle navigation</span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
 	</div>
-	<div class="collapse navbar-collapse navbar-ex1-collapse">
+	<div class="collapse navbar-collapse navbar-latex-selector-collapse">
 		<ul class="nav navbar-nav">
 			<li><a href="#" class="insert-latex" data-latex-code="\( \)" data-caret-start-offset="-2" >Inline mode</a></li>
 			<li><a href="#" class="insert-latex" data-latex-code="\[ \]" data-caret-start-offset="-2" >Displayed mode</a></li>
