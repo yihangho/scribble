@@ -47,7 +47,20 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 	<div class="container">
 		<nav class="navbar navbar-default" role="navigation">
 			<div class="navbar-header">
-			    <a class="navbar-brand" href="#"><?php echo $cakeDescription;?></a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			    <a class="navbar-brand" href="<?php echo $this->Html->url(array('controller' => 'Scribbles', 'action' => 'add'));?>"><?php echo $cakeDescription;?></a>
+			</div>
+
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li <?php if (isset($tutorial) && $tutorial):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'pages', 'action' => 'tutorial'));?>">Tutorial</a></li>
+					<li <?php if (isset($about) && $about):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'pages', 'action' => 'about'));?>">About Scribble</a></li>
+				</ul>
 			</div>
 		</nav>
 
