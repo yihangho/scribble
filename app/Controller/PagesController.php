@@ -79,4 +79,8 @@ class PagesController extends AppController {
 	public function tutorial() {
 		$this->set("title_for_layout", "Tutorial");
 	}
+
+	public function about() {
+		$this->set("title_for_layout", "About Scribble");
+	}
 }
