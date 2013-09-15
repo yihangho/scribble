@@ -29,8 +29,6 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
-		echo $this->Html->meta('icon');
-
 		echo $this->Html->css("bootstrap.min");
 		echo $this->Html->css('zocial');
 		echo $this->Html->css('style');
