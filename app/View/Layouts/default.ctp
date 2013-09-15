@@ -38,6 +38,9 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 		echo $this->fetch('script');
 
 		echo $this->Html->script("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
+		echo $this->Html->scriptStart();
+		echo "if (!window.jQuery) document.write('<script src=\"js/jquery-1.10.2.min.js\"><\/script>');";
+		echo $this->Html->scriptEnd();
 		echo $this->Html->script("bootstrap.min");
 		echo $this->Html->script("script");
 	?>
