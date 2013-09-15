@@ -18,6 +18,7 @@
 					<li><a href="#" class="insert-latex" data-latex-code="a^b" data-caret-start-offset="-3" data-caret-end-offset="-2">\(a^b\) (Exponentiation)</a></li>
 					<li><a href="#" class="insert-latex" data-latex-code="\sqrt{b}" data-caret-start-offset="-2" data-caret-end-offset="-1">\(\sqrt{b}\) (Square root)</a></li>
 					<li><a href="#" class="insert-latex" data-latex-code="\sqrt[n]{b}" data-caret-start-offset="-5" data-caret-end-offset="-4">\(\sqrt[n]{b}\) (\(n\)-th root)</a></li>
+					<li><a href="#" class="insert-latex" data-latex-code="\pm"  >\(\pm\) (Plus or minus)</a></li>
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -40,6 +41,8 @@
 					<li><a href="#" class="insert-latex" data-latex-code="\ll">\(\ll\) (Much less than)</a></li>
 					<li><a href="#" class="insert-latex" data-latex-code="\gg">\(\gg\) (Much greater than)</a></li>
 					<li><a href="#" class="insert-latex" data-latex-code="\ne">\(\ne\) (Not equal)</a></li>
+					<li><a href="#" class="insert-latex" data-latex-code="\approx">\(\approx\) (Approximately equal)</a></li>
+					<li><a href="#" class="insert-latex" data-latex-code="\equiv">\(\equiv\) (Equivalent or congruent)</a></li>
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -99,7 +102,7 @@
 				<ul class="dropdown-menu">
 					<li role="presentation" class="dropdown-header">Differentiation</li>
 					<li><a href="#" class="insert-latex" data-latex-code="\frac{d}{dx}\left(f(x)\right)" data-caret-start-offset="-11" data-caret-end-offset="-7">\(\frac{d}{dx}\left(f(x)\right)\)</a></li>
-					<li><a href="#" class="insert-latex" data-latex-code="\frac{dy}{dx}"  >\(\frac{dy}{dx}\)</a></li>
+					<li><a href="#" class="insert-latex" data-latex-code="\frac{dy}{dx}">\(\frac{dy}{dx}\)</a></li>
 					<li><a href="#" class="insert-latex" data-latex-code="f'(x)" data-caret-start-offset="-2" data-caret-end-offset="-1">\(f'(x)\)</a></li>
 					<li><a href="#" class="insert-latex" data-latex-code="f^{(n)}(x)" data-caret-start-offset="-6" data-caret-end-offset="-5">\(f^{(n)}(x)\)</a></li>
 					<li role="presentation" class="divider"></li>
@@ -134,10 +137,12 @@
 				</ul>
 			</li>
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Geomtry <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Geometry <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="#" class="insert-latex" data-latex-code="\angle">\(\angle\) (Angle)</a></li>
 					<li><a href="#" class="insert-latex" data-latex-code="^\circ">\(^\circ\) (Degree)</a></li>
+					<li><a href="#" class="insert-latex" data-latex-code="\parallel">\(\parallel\) (Parallel)</a></li>
+					<li><a href="#" class="insert-latex" data-latex-code="\perp">\(\perp\) (Perpendicular)</a></li>
 				</ul>
 			</li>
 			<li class="dropdown">
