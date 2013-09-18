@@ -107,3 +107,10 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+/**
+ * Configure API keys
+ * DO NOT commit your API keys
+ */
+// Configure::write('FB_API', 'XXXXXXXXXXXXXXX');
+// Configure::write('FB_SECRET', 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
