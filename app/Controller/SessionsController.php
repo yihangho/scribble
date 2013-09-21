@@ -1,7 +1,7 @@
 <?php
 class SessionsController extends AppController {
 	public $uses = array('User');
-	public $components = array('FacebookAuth', 'Cookie');
+	public $components = array('FacebookAuth', 'GoogleAuth', 'Cookie');
 
 	public function create() {
 
@@ -30,6 +30,27 @@ class SessionsController extends AppController {
 		$current_user = $this->User->force_get($email);
 
 		$this->log_in($current_user);
+	}
+
+	public function google_plus_login() {
+		if (!array_key_exists("code", $this->request->query)) {
+			return;
+		}
+
+		$access_token = $this->GoogleAuth->get_access_token($this->request->query('code'));
+		if ($access_token === false) {
+			return;
+		}
+
+		$email = $this->GoogleAuth->get_email_address($access_token);
+		if ($email === false) {
+			return;
+		}
+
+		$current_user = $this->User->force_get($email);
+
+		$this->log_in($current_user);
+
 	}
 
 	private function log_in($user) {

@@ -33,6 +33,7 @@ Router::parseExtensions('json');
 	Router::connect('/tutorial', array('controller' => 'pages', 'action' => 'tutorial'));
 	Router::connect('/login', array('controller' => 'sessions', 'action' => 'create'));
 	Router::connect('/fb_login', array('controller' => 'sessions', 'action' => 'fb_login'));
+	Router::connect('/google_plus_login', array('controller' => 'sessions', 'action' => 'google_plus_login'));
 	Router::connect('/', array('controller' => 'Scribbles', 'action' => 'add'));
 	Router::connect('/*', array('controller' => 'Scribbles', 'action' => 'view'));
 /**
