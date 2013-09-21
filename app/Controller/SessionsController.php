@@ -50,7 +50,6 @@ class SessionsController extends AppController {
 		$current_user = $this->User->force_get($email);
 
 		$this->log_in($current_user);
-
 	}
 
 	private function log_in($user) {
