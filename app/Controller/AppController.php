@@ -32,4 +32,17 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+	public $uses = array('User');
+	public $components = array('Cookie');
+
+	public function beforeFilter() {
+		$remember_token = $this->Cookie->read('remember_token');
+		$this->currentUser = false;
+		if ($remember_token) {
+			$this->currentUser = $this->User->find('first', array('conditions' => array(
+			'User.remember_token' => $remember_token
+			)));
+		}
+		$this->set('loggedIn', !!$this->currentUser);
+	}
 }

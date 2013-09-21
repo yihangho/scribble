@@ -1,7 +1,7 @@
 <?php
 class SessionsController extends AppController {
-	public $helpers = array('Html');
-
+	public $uses = array('User');
+	public $components = array('FacebookAuth', 'Cookie');
 
 	public function create() {
 
@@ -14,34 +14,36 @@ class SessionsController extends AppController {
 			}
 			return;
 		}
-		App::uses('HttpSocket', 'Network/Http');
-		$fb_code = $this->request->query["code"];
-		$http_socket = new HttpSocket();
-		$fb_access_token_response = explode('&', $http_socket->get('https://graph.facebook.com/oauth/access_token', array(
-				'client_id' => Configure::Read('FB_API'),
-				'client_secret' => Configure::Read('FB_SECRET'),
-				'code' => $fb_code,
-				'redirect_uri' => Router::url(array('controller' => 'sessions', 'action' => 'fb_login'), true)
-			)));
-		$access_token = false;
-		foreach($fb_access_token_response as $response) {
-			if (urldecode((explode('=', $response)[0]) == 'access_token')) {
-				$access_token = urldecode(explode('=', $response)[1]);
-			}
-		}
+
+		$access_token = $this->FacebookAuth->get_access_token($this->request->query["code"]);
 		// TODO Properly handle the case where access_token is not found.
 		if ($access_token === false) {
-			return false;
-		}
-		$fb_get_email_address_request = 'https://graph.facebook.com/fql?q=SELECT+email+FROM+user+WHERE+uid=me()&access_token='.$access_token;
-		// error_log($fb_get_email_address_request);
-		$fb_email_address_response = json_decode($http_socket->get($fb_get_email_address_request), true);
-		// TODO Properly handle the case where email is not found
-		if (array_key_exists("data", $fb_email_address_response) && array_key_exists("email", $fb_email_address_response["data"][0])) {
-			$email = $fb_email_address_response["data"][0]["email"];
-		} else {
 			return;
 		}
+
+		$email = $this->FacebookAuth->get_email_address($access_token);
+		// TODO Properly handle the case where email is not found
+		if ($email === false) {
+			return;
+		}
+
+		$current_user = $this->User->force_get($email);
+
+		$this->log_in($current_user);
+	}
+
+	private function log_in($user) {
+		// Log user described by $user in
+
+		//Get a new remember_token
+		$remember_token = $this->User->new_remember_token($user["User"]["id"]);
+
+		// Set the new remember_token to cookie
+		$this->Cookie->write('remember_token', $remember_token, true, '20 years');
+
+		//Set current user
+		$this->currentUser = $user;
+		$this->set('loggedIn', true);
 	}
 }
 ?>
