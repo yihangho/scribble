@@ -15,8 +15,6 @@ class TwitterAuthComponent extends Component {
 				'Authorization' => $authorization_string
 				)
 			))->body;
-		error_log("oauth_token_response");
-		error_log($twitter_oauth_token_response);
 		$data_set = explode('&', $twitter_oauth_token_response);
 		$oauth_token = $oauth_token_secret = false;
 		foreach($data_set as $entry) {
@@ -46,8 +44,6 @@ class TwitterAuthComponent extends Component {
 			), array(
 			'oauth_verifier' => $oauth_verifier
 			));
-		error_log("Access token auth string:");
-		error_log($authorization_string);
 		// $http_socket = new HttpSocket();
 
 	}
@@ -117,10 +113,6 @@ class TwitterAuthComponent extends Component {
 		$signature_base_string = strtoupper($http_method).'&'.rawurlencode($url).'&'.rawurlencode($parameter_string);
 		$signing_key = rawurlencode(Configure::Read('TWITTER_SECRET')).'&'.rawurlencode($oauth_token_secret);
 		$signature = base64_encode(hash_hmac('sha1', $signature_base_string, $signing_key, true));
-		error_log("Base string:");
-		error_log($signature_base_string);
-		error_log("Key:");
-		error_log($signing_key);
 		return $signature;
 	}
 }
