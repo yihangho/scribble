@@ -9,7 +9,7 @@ class GoogleAuthComponent extends Component {
 				'client_id' => Configure::Read('GOOGLE_API'),
 				'client_secret' => Configure::Read('GOOGLE_SECRET'),
 				'code' => $code,
-				'redirect_uri' => Router::url(array('controller' => 'sessions', 'action' => 'google_plus_login'), true),
+				'redirect_uri' => Router::url(array('controller' => 'sessions', 'action' => 'googlePlusLogin'), true),
 				'grant_type' => 'authorization_code'
 			));
 		$googleAccessTokenResponse = json_decode($googleAccessTokenResponse->body, true);
