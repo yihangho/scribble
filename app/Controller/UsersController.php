@@ -2,4 +2,3 @@
 class UsersController extends AppController {
 
 }
-?>

@@ -1,6 +1,7 @@
 <?php
 class User extends AppModel {
-	public function force_get($email) {
+
+	public function forceGet($email) {
 		// Get the user with $email. Create user if not exist.
 		$user = $this->find('first', array('conditions' => array(
 			'User.email' => $email
@@ -14,19 +15,18 @@ class User extends AppModel {
 		return $user;
 	}
 
-	public function new_remember_token($id) {
+	public function newRememberToken($id) {
 		// Generate, set and return a new remember_token for row with id = $id
-		$user_exists = $this->find('count', array('conditions' => array(
+		$userExists = $this->find('count', array('conditions' => array(
 			'User.id' => $id
 			)));
-		if (!$user_exists) {
+		if (!$userExists) {
 			return false;
 		}
-		$remember_token = sha1(mt_rand().''.mt_rand());
+		$rememberToken = sha1(mt_rand() . '' . mt_rand());
 		$this->id = $id;
-		$this->set('remember_token', $remember_token);
+		$this->set('remember_token', $rememberToken);
 		$this->save();
-		return $remember_token;
+		return $rememberToken;
 	}
 }
-?>

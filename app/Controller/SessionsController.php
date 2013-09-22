@@ -28,7 +28,7 @@ class SessionsController extends AppController {
 			return;
 		}
 
-		$currentUser = $this->User->force_get($email);
+		$currentUser = $this->User->forceGet($email);
 
 		$this->_logIn($currentUser);
 	}
@@ -48,7 +48,7 @@ class SessionsController extends AppController {
 			return;
 		}
 
-		$currentUser = $this->User->force_get($email);
+		$currentUser = $this->User->forceGet($email);
 
 		$this->_logIn($currentUser);
 	}
@@ -57,7 +57,7 @@ class SessionsController extends AppController {
 		// Log user described by $user in
 
 		//Get a new remember_token
-		$rememberToken = $this->User->new_remember_token($user["User"]["id"]);
+		$rememberToken = $this->User->newRememberToken($user["User"]["id"]);
 
 		// Set the new remember_token to cookie
 		$this->Cookie->write('remember_token', $rememberToken, true, '20 years');
