@@ -1,23 +1,30 @@
 <?php
 class ScribblesController extends AppController {
+
 	public $helpers = array('Html', 'Form', 'Js' => array('Jquery'));
+
 	public $components = array('RequestHandler');
 
 	public function add() {
 		$this->set("title_for_layout", "New Scribble");
 		if ($this->request->is("post")) {
 			$this->Scribble->create();
-			if (($new_scribble = $this->Scribble->save($this->request->data, array("title", "body")))) {
+			$newScribble = $this->Scribble->save($this->request->data, array("title", "body"));
+			if ($newScribble) {
 				$this->Session->setFlash("Scribble created!", "default", array("class" => "alert alert-success"));
-				return $this->redirect(array("controller" => "Scribbles", "action" => "view", $new_scribble["Scribble"]["ukey"]));
+				return $this->redirect(array("controller" => "Scribbles", "action" => "view", $newScribble["Scribble"]["ukey"]));
 			} else {
 				$this->Session->setFlash("Scribble cannot be created. :(", "default", array("class" => "alert alert-danger"));
 			}
 		}
 	}
 
+/**
+ * @throws NotFoundException if ukey provided does not correspond to any Scribble
+ */
+
 	public function view($ukey = null) {
-		$json_request = $this->isJsonRequest();
+		$jsonRequest = $this->_isJsonRequest();
 
 		if (!$ukey) {
 			throw new NotFoundException("Scribble not available");
@@ -34,13 +41,13 @@ class ScribblesController extends AppController {
 		if ($this->request->is("post") || $this->request->is("put")) {
 			$this->Scribble->id = $scribble["Scribble"]["id"];
 			if ($this->Scribble->save($this->request->data, array("fieldList" => array("title", "body")))) {
-				if ($json_request) {
+				if ($jsonRequest) {
 					$this->set("status", "OK");
 				} else {
 					$this->Session->setFlash("Scribble updated", "default", array("class" => "alert alert-success"));
 				}
 			} else {
-				if ($json_request) {
+				if ($jsonRequest) {
 					$this->set("status", "Error");
 				} else {
 					$this->Session->setFlash("Scribble cannot be updated", "default", array("class" => "alert alert-danger"));
@@ -57,7 +64,7 @@ class ScribblesController extends AppController {
 
 		$this->set("scribble", $scribble);
 
-		if ($json_request) {
+		if ($jsonRequest) {
 			if ($this->request->is("post") || $this->request->is("put")) {
 				$this->set("_serialize", array("status", "scribble"));
 			} else {
@@ -67,8 +74,9 @@ class ScribblesController extends AppController {
 		}
 	}
 
-	private function isJsonRequest() {
-		//Check if current request ask for a JSON response
+	//Check if current request ask for a JSON response
+
+	protected function _isJsonRequest() {
 		return (array_key_exists("REQUEST_URI", $_SERVER) && strtolower(substr($_SERVER['REQUEST_URI'], -5)) == '.json') || (array_key_exists("HTTP_ACCEPT", $_SERVER) && in_array("application/json", preg_split("/,\\s*/", strtolower($_SERVER["HTTP_ACCEPT"]))));
 	}
 }
