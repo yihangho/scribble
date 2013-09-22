@@ -3,5 +3,9 @@
 	Explain to user how we handle their data.
 -->
 <p>
-	<?php if (isset($fb_error)) echo $fb_error;?>
+	<?php
+	if (isset($fbError)) {
+		echo $fbError;
+	}
+	?>
 </p>

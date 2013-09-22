@@ -2,53 +2,52 @@
 App::Uses('Component', 'Controller');
 App::Uses('HttpSocket', 'Network/Http');
 class TwitterAuthComponent extends Component {
+
 	public $components = array('Session');
-	public function get_oauth_token() {
+
+	public function getOauthToken() {
 		$this->Session->delete('twitterOAuthToken');
 		$this->Session->delete('twitterOAuthTokenSecret');
-		$authorization_string = $this->_authorizationString('POST', 'https://api.twitter.com/oauth/request_token', '', array(
-			'oauth_callback' => Router::url(array('controller' => 'sessions', 'action' => 'twitter_login'), true)
+		$authorizationString = $this->_authorizationString('POST', 'https://api.twitter.com/oauth/request_token', '', array(
+			'oauth_callback' => Router::url(array('controller' => 'sessions', 'action' => 'twitterLogin'), true)
 			));
-		$http_socket = new HttpSocket();
-		$twitter_oauth_token_response = $http_socket->post('https://api.twitter.com/oauth/request_token', array(), array(
+		$httpSocket = new HttpSocket();
+		$twitterOauthTokenResponse = $httpSocket->post('https://api.twitter.com/oauth/request_token', array(), array(
 			'header' => array(
-				'Authorization' => $authorization_string
+				'Authorization' => $authorizationString
 				)
 			))->body;
-		$data_set = explode('&', $twitter_oauth_token_response);
-		$oauth_token = $oauth_token_secret = false;
-		foreach($data_set as $entry) {
+		$dataSet = explode('&', $twitterOauthTokenResponse);
+		$oauthToken = $oauthTokenSecret = false;
+		foreach ($dataSet as $entry) {
 			$entry = explode('=', $entry);
 			if ($entry[0] == 'oauth_token') {
-				$oauth_token = $entry[1];
-			} else if ($entry[0] == 'oauth_token_secret') {
-				$oauth_token_secret = $entry[1];
-			} else if ($entry[0] == 'oauth_verifier') {
-				$oauth_verifier = $entry[1];
+				$oauthToken = $entry[1];
+			} elseif ($entry[0] == 'oauth_token_secret') {
+				$oauthTokenSecret = $entry[1];
+			} elseif ($entry[0] == 'oauth_verifier') {
+				$oauthVerifier = $entry[1];
 			}
 		}
 		// TODO Handle error
-		$this->Session->write('twitterOAuthToken', $oauth_token);
-		$this->Session->write('twitterOAuthTokenSecret', $oauth_token_secret);
-		return $oauth_token;
+		$this->Session->write('twitterOAuthToken', $oauthToken);
+		$this->Session->write('twitterOAuthTokenSecret', $oauthTokenSecret);
+		return $oauthToken;
 	}
 
-	public function get_access_token($_oauth_token, $_oauth_verifier) {
-		// TODO Verify that oauth token matches
-		$oauth_token = $this->Session->read('twitterOAuthToken');
-		$oauth_token_secret = $this->Session->read('twitterOAuthTokenSecret');
-		$oauth_verifier = $_oauth_verifier;
-		$this->Session->write('twitterOAuthVerifier', $oauth_verifier);
-		$authorization_string = $this->_authorizationString('POST', 'https://api.twitter.com/oauth/access_token', '', array(
-			'oauth_token' => $oauth_token
+	public function getAccessToken($oauthToken, $oauthVerifier) {
+		if ($oauthToken != $this->Session->read('twitterOAuthToken')) {
+			return false;
+		}
+		$this->Session->write('twitterOAuthVerifier', $oauthVerifier);
+		$authorizationString = $this->_authorizationString('POST', 'https://api.twitter.com/oauth/access_token', '', array(
+			'oauth_token' => $oauthToken
 			), array(
-			'oauth_verifier' => $oauth_verifier
+			'oauth_verifier' => $oauthVerifier
 			));
-		// $http_socket = new HttpSocket();
-
 	}
 
-	protected function _authorizationString($http_method, $url, $oauth_token_secret = '', $oauth_parameters = array(), $parameters = array()) {
+	protected function _authorizationString($httpMethod, $url, $oauthTokenSecret = '', $oauthParameters = array(), $parameters = array()) {
 		// $http_method should be either 'post' or 'get', case insensitive
 		// $url is the URL that the request will be GET from or POSTed to
 		// $parameters are the GET or POST parameters, combined into one array
@@ -58,28 +57,26 @@ class TwitterAuthComponent extends Component {
 		// oauth_token is not included in $default_oauth_parameters because
 		// 1. oauth_token changes all the time
 		// 2. certain time, oauth_token does not exist, eg, when requesting for oauth_token
-		$default_oauth_parameters = array(
+		$defaultOauthParameters = array(
 			'oauth_consumer_key' => Configure::Read('TWITTER_API'),
 			'oauth_nonce' => $this->_generateNonce(),
 			'oauth_signature_method' => 'HMAC-SHA1',
 			'oauth_timestamp' => time(),
 			'oauth_version' => '1.0'
 			);
-		$oauth_parameters = array_merge($default_oauth_parameters, $oauth_parameters);
+		$oauthParameters = array_merge($defaultOauthParameters, $oauthParameters);
 
-
-		$oauth_parameters['oauth_signature'] = $this->_getSignature($http_method, $url, $oauth_token_secret, $oauth_parameters, $parameters);
-		// ksort($oauth_parameters, SORT_STRING);
-		$authorization_string = 'OAuth ';
-		$number_of_oauth_parameters = count($oauth_parameters);
-		foreach($oauth_parameters as $key => $value) {
-			$authorization_string .= rawurlencode($key).'="'.rawurlencode($value).'"';
-			$number_of_oauth_parameters--;
-			if ($number_of_oauth_parameters > 0) {
-				$authorization_string .= ', ';
+		$oauthParameters['oauth_signature'] = $this->_getSignature($httpMethod, $url, $oauthTokenSecret, $oauthParameters, $parameters);
+		$authorizationString = 'OAuth ';
+		$numberOfOauthParameters = count($oauthParameters);
+		foreach ($oauthParameters as $key => $value) {
+			$authorizationString .= rawurlencode($key) . '="' . rawurlencode($value) . '"';
+			$numberOfOauthParameters--;
+			if ($numberOfOauthParameters > 0) {
+				$authorizationString .= ', ';
 			}
 		}
-		return $authorization_string;
+		return $authorizationString;
 	}
 
 	protected function _generateNonce() {
@@ -90,30 +87,29 @@ class TwitterAuthComponent extends Component {
 		return $nonce;
 	}
 
-	protected function _getSignature($http_method, $url, $oauth_token_secret, $oauth_parameters, $parameters = array()) {
+	protected function _getSignature($httpMethod, $url, $oauthTokenSecret, $oauthParameters, $parameters = array()) {
 		// Helper function to generate oauth_signature
-		$encoded_parameters = array();
-		foreach($parameters as $key => $value) {
-			$encoded_parameters[rawurlencode($key)] = rawurlencode($value);
+		$encodedParameters = array();
+		foreach ($parameters as $key => $value) {
+			$encodedParameters[rawurlencode($key)] = rawurlencode($value);
 		}
-		foreach($oauth_parameters as $key => $value) {
-			$encoded_parameters[rawurlencode($key)] = rawurlencode($value);
+		foreach ($oauthParameters as $key => $value) {
+			$encodedParameters[rawurlencode($key)] = rawurlencode($value);
 		}
-		ksort($encoded_parameters, SORT_STRING);
+		ksort($encodedParameters, SORT_STRING);
 
-		$parameter_string = "";
-		$number_of_parameters = count($encoded_parameters);
-		foreach($encoded_parameters as $key => $value) {
-			$parameter_string .= "$key=$value";
-			$number_of_parameters--;
-			if ($number_of_parameters > 0) {
-				$parameter_string .= '&';
+		$parameterString = "";
+		$numberOfParameters = count($encodedParameters);
+		foreach ($encodedParameters as $key => $value) {
+			$parameterString .= "$key=$value";
+			$numberOfParameters--;
+			if ($numberOfParameters > 0) {
+				$parameterString .= '&';
 			}
 		}
-		$signature_base_string = strtoupper($http_method).'&'.rawurlencode($url).'&'.rawurlencode($parameter_string);
-		$signing_key = rawurlencode(Configure::Read('TWITTER_SECRET')).'&'.rawurlencode($oauth_token_secret);
-		$signature = base64_encode(hash_hmac('sha1', $signature_base_string, $signing_key, true));
+		$signatureBaseString = strtoupper($httpMethod) . '&' . rawurlencode($url) . '&' . rawurlencode($parameterString);
+		$signingKey = rawurlencode(Configure::Read('TWITTER_SECRET')) . '&' . rawurlencode($oauthTokenSecret);
+		$signature = base64_encode(hash_hmac('sha1', $signatureBaseString, $signingKey, true));
 		return $signature;
 	}
 }
-?>
