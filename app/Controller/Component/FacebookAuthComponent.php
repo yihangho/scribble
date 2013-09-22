@@ -5,16 +5,17 @@ class FacebookAuthComponent extends Component {
 
 	public function getAccessToken($code) {
 		$httpSocket = new HttpSocket();
-		$fbAccessTokenResponse = explode('&', $httpSocket->get('https://graph.facebook.com/oauth/access_token', array(
+		$fbAccessTokenResponse = $httpSocket->get('https://graph.facebook.com/oauth/access_token', array(
 				'client_id' => Configure::Read('FB_API'),
 				'client_secret' => Configure::Read('FB_SECRET'),
 				'code' => $code,
-				'redirect_uri' => Router::url(array('controller' => 'sessions', 'action' => 'fb_login'), true)
-			)));
+				'redirect_uri' => Router::url(array('controller' => 'sessions', 'action' => 'fbLogin'), true)
+			))->body;
+		$entries = explode('&', $fbAccessTokenResponse);
 		$accessToken = false;
-		foreach ($fbAccessTokenResponse as $response) {
-			if (urldecode((explode('=', $response)[0]) == 'access_token')) {
-				$accessToken = urldecode(explode('=', $response)[1]);
+		foreach ($entries as $entry) {
+			if (urldecode((explode('=', $entry)[0]) == 'access_token')) {
+				$accessToken = urldecode(explode('=', $entry)[1]);
 			}
 		}
 		return $accessToken;

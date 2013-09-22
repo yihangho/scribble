@@ -27,6 +27,7 @@ class SessionsController extends AppController {
 		if ($email === false) {
 			return;
 		}
+		error_log($email);
 
 		$currentUser = $this->User->force_get($email);
 
@@ -65,5 +66,6 @@ class SessionsController extends AppController {
 		//Set current user
 		$this->currentUser = $user;
 		$this->set('loggedIn', true);
+		error_log("Logged in: " . $user["User"]["email"]);
 	}
 }
