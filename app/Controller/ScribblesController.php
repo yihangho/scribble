@@ -1,4 +1,5 @@
 <?php
+App::uses('AppController', 'Controller');
 class ScribblesController extends AppController {
 
 	public $helpers = array('Html', 'Form', 'Js' => array('Jquery'));
