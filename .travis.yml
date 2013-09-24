@@ -12,6 +12,7 @@ before_script:
   - mysql -u travis -e "CREATE DATABASE scribble_test;"
   - mkdir app/tmp
   - chmod -R 777 app/tmp
+  - chmod +x phpunit_autorun.sh
   - echo "<?php
     class DATABASE_CONFIG {
     public \$test = array(
