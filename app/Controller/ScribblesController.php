@@ -3,7 +3,7 @@ class ScribblesController extends AppController {
 
 	public $helpers = array('Html', 'Form', 'Js' => array('Jquery'));
 
-	public $components = array('RequestHandler', 'Session');
+	public $components = array('RequestHandler');
 
 	public function add() {
 		$this->set("title_for_layout", "New Scribble");
