@@ -60,7 +60,7 @@ class ScribblesControllerTest extends ControllerTestCase {
 		$this->assertRegExp('/My new title/', $result, 'The response should contain the new title.');
 		$this->assertRegExp('/My new body/', $result, 'The response should contain the new body.');
 
-		$result = $this->testAction(Router::url(array('controller' => 'Scribbles', 'action' => 'view', '1234567')), array('method' => 'post', 'return' => 'contents', 'data' => $inputData));
+		$result = $this->testAction('/1234567', array('method' => 'post', 'return' => 'contents', 'data' => $inputData));
 		$this->assertRegExp('/updated/', $result, 'The update should be accepted');
 	}
 
@@ -73,7 +73,7 @@ class ScribblesControllerTest extends ControllerTestCase {
 		$result = $this->testAction(Router::url(array('controller' => 'Scribbles', 'action' => 'view', '1234567.json')), array('method' => 'post', 'return' => 'contents', 'data' => $inputData));
 		$this->assertRegExp('/Error/', $result, 'The update should be rejected when the body is empty.');
 
-		$result = $this->testAction(Router::url(array('controller' => 'Scribbles', 'action' => 'view', '1234567')), array('method' => 'post', 'return' => 'contents', 'data' => $inputData));
+		$result = $this->testAction('/1234567', array('method' => 'post', 'return' => 'contents', 'data' => $inputData));
 		$this->assertRegExp('/cannot be updated/', $result, 'The update should be rejected when the body is empty.');
 	}
 
