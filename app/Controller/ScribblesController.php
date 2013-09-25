@@ -27,10 +27,6 @@ class ScribblesController extends AppController {
 	public function view($ukey = null) {
 		$jsonRequest = $this->_isJsonRequest();
 
-		if (!$ukey) {
-			throw new NotFoundException("Scribble not available");
-		}
-
 		$scribble = $this->Scribble->find("first", array(
 			"conditions" => array("Scribble.ukey" => $ukey)
 			));
@@ -78,6 +74,6 @@ class ScribblesController extends AppController {
 	//Check if current request ask for a JSON response
 
 	protected function _isJsonRequest() {
-		return (array_key_exists("REQUEST_URI", $_SERVER) && strtolower(substr($_SERVER['REQUEST_URI'], -5)) == '.json') || (array_key_exists("HTTP_ACCEPT", $_SERVER) && in_array("application/json", preg_split("/,\\s*/", strtolower($_SERVER["HTTP_ACCEPT"]))));
+		return !!preg_match('/\/.*\.json/', $this->here);
 	}
 }
