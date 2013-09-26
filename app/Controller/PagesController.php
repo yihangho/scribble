@@ -78,11 +78,11 @@ class PagesController extends AppController {
 
 	public function tutorial() {
 		$this->set("title_for_layout", "Tutorial");
-		$this->set("tutorial", true);
+		$this->set("tutorialPage", true);
 	}
 
 	public function about() {
 		$this->set("title_for_layout", "About Scribble");
-		$this->set("about", true);
+		$this->set("aboutPage", true);
 	}
 }

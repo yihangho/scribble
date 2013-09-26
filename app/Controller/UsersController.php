@@ -6,5 +6,6 @@ class UsersController extends AppController {
 			return $this->redirect(Router::url(array('controller' => 'Scribbles', 'action' => 'add')));
 		}
 		$this->set('currentUser', $this->currentUser);
+		$this->set('minePage', true);
 	}
 }

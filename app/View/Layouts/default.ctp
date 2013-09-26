@@ -60,8 +60,13 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li <?php if (isset($tutorial) && $tutorial):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'pages', 'action' => 'tutorial'));?>">Tutorial</a></li>
-					<li <?php if (isset($about) && $about):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'pages', 'action' => 'about'));?>">About Scribble</a></li>
+					<?php if ($loggedIn):?>
+					<li <?php if (isset($minePage) && $minePage):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'Users', 'action' => 'listScribbles'));?>">Mine</a></li>
+					<?php else:?>
+					<li <?php if (isset($loginPage) && $loginPage):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'sessions', 'action' => 'create'));?>">Login</a></li>
+					<?php endif;?>
+					<li <?php if (isset($tutorialPage) && $tutorialPage):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'pages', 'action' => 'tutorial'));?>">Tutorial</a></li>
+					<li <?php if (isset($aboutPage) && $aboutPage):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'pages', 'action' => 'about'));?>">About Scribble</a></li>
 				</ul>
 			</div>
 		</nav>

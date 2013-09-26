@@ -6,6 +6,10 @@ class SessionsController extends AppController {
 	public $components = array('FacebookAuth', 'GoogleAuth', 'Cookie');
 
 	public function create() {
+		if ($this->currentUser) {
+			return $this->redirect(Router::url(array('controller' => 'Users', 'action' => 'listScribbles')));
+		}
+		$this->set('loginPage', true);
 	}
 
 	public function fbLogin() {
@@ -31,6 +35,8 @@ class SessionsController extends AppController {
 		$currentUser = $this->User->forceGet($email);
 
 		$this->_logIn($currentUser);
+
+		return $this->redirect(Router::url(array('controller' => 'Scribbles', 'action' => 'add')));
 	}
 
 	public function googlePlusLogin() {
@@ -51,6 +57,8 @@ class SessionsController extends AppController {
 		$currentUser = $this->User->forceGet($email);
 
 		$this->_logIn($currentUser);
+
+		return $this->redirect(Router::url(array('controller' => 'Scribbles', 'action' => 'add')));
 	}
 
 	protected function _logIn($user) {
