@@ -1,7 +1,12 @@
 <?php
 class ScribblesControllerTest extends ControllerTestCase {
 
-	public $fixtures = array('app.scribble');
+	public $fixtures = array('app.scribble', 'app.user');
+
+	public function setUp() {
+		parent::setUp();
+		$this->Scribble = ClassRegistry::init('Scribble');
+	}
 
 	public function testCreateNewScribble() {
 		// When creating new Scribble, there should be a header indication 'New Scribble'
@@ -91,5 +96,19 @@ class ScribblesControllerTest extends ControllerTestCase {
 	public function testViewInvalidUkey() {
 		$this->setExpectedException('NotFoundException');
 		$result = $this->testAction(Router::url(array('controller' => 'Scribbles', 'action' => 'view', 'invalid.json')), array('method' => 'post', 'return' => 'contents'));
+	}
+
+	public function testCreateNewScribbleWithUserId() {
+		$inputData = array('Scribble' => array(
+			'title' => 'My title',
+			'body' => 'Look! I have a user_id',
+			'user_id' => 1
+			));
+
+		$this->testAction(Router::url(array('controller' => 'Scribbles', 'action' => 'add')), array('data' => $inputData));
+		$numberOfScribbles = $this->Scribble->find('count', array('conditions' => array(
+			'Scribble.user_id' => 1
+			)));
+		$this->assertGreaterThan(0, $numberOfScribbles, 'There should be at least one Scribble with user_id == 1');
 	}
 }

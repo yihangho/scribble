@@ -1,7 +1,7 @@
 <?php
 class ScribbleTest extends CakeTestCase {
 
-	public $fixtures = array('app.scribble');
+	public $fixtures = array('app.scribble', 'app.user');
 
 	public function setUp() {
 		parent::setUp();
