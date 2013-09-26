@@ -62,6 +62,7 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 				<ul class="nav navbar-nav navbar-right">
 					<?php if ($loggedIn):?>
 					<li <?php if (isset($minePage) && $minePage):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'Users', 'action' => 'listScribbles'));?>">Mine</a></li>
+					<li><a href="<?php echo $this->Html->url(array('controller' => 'sessions', 'action' => 'destroy'));?>">Logout</a></li>
 					<?php else:?>
 					<li <?php if (isset($loginPage) && $loginPage):?>class="active"<?php endif;?>><a href="<?php echo $this->Html->url(array('controller' => 'sessions', 'action' => 'create'));?>">Login</a></li>
 					<?php endif;?>

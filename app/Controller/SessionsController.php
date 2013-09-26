@@ -61,6 +61,13 @@ class SessionsController extends AppController {
 		return $this->redirect(Router::url(array('controller' => 'Scribbles', 'action' => 'add')));
 	}
 
+	public function destroy() {
+		$this->Cookie->delete('remember_token');
+		$this->currentUser = false;
+		$this->set('loggedIn', false);
+		$this->redirect(Router::url(array('controller' => 'sessions', 'action' => 'create')));
+	}
+
 	protected function _logIn($user) {
 		// Log user described by $user in
 
