@@ -1,6 +1,8 @@
 <?php
 class User extends AppModel {
 
+	public $hasMany = 'Scribble';
+
 	public function forceGet($email) {
 		// Get the user with $email. Create user if not exist.
 		$user = $this->find('first', array('conditions' => array(

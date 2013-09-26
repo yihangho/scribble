@@ -1,6 +1,8 @@
 <?php
 class Scribble extends AppModel {
 
+	public $belongsTo = 'User';
+
 	public $validate = array(
 		"body" => array(
 			'rule'		=> 'notEmpty',
