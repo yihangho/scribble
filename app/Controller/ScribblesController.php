@@ -10,6 +10,9 @@ class ScribblesController extends AppController {
 		$this->set("title_for_layout", "New Scribble");
 		if ($this->request->is("post")) {
 			$this->Scribble->create();
+			if ($this->currentUser) {
+				$this->request->data['Scribble']['user_id'] = $this->currentUser['User']['id'];
+			}
 			$newScribble = $this->Scribble->save($this->request->data, array("title", "body"));
 			if ($newScribble) {
 				$this->Session->setFlash("Scribble created!", "default", array("class" => "alert alert-success"));
