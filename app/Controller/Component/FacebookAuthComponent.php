@@ -14,7 +14,7 @@ class FacebookAuthComponent extends Component {
 		$entries = explode('&', $fbAccessTokenResponse);
 		$accessToken = false;
 		foreach ($entries as $entry) {
-			if (urldecode((explode('=', $entry)[0]) == 'access_token')) {
+			if (urldecode(explode('=', $entry)[0]) == 'access_token') {
 				$accessToken = urldecode(explode('=', $entry)[1]);
 			}
 		}

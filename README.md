@@ -23,7 +23,7 @@ Scribble 2.0 is developed and tested with the following:
 I am not very sure if these are strictly required - chances are they don't. However, I am quite sure that PHP >= 5.4 is required as [function array dereferencing](http://www.php.net/manual/en/migration54.new-features.php) is used.
 
 ## Change Log
-This change log will only record the changes between versions pushed to production. As a result, there will be quite a few commits in between them. Refer to individual commit for more informaion.
+This change log will only record the changes between versions pushed to production. As a result, there will be quite a few commits in between them. Refer to individual commit for more information.
 
 - September 27, 2013 (77aff3013f8ca53c21254d22a076fe14befb3ced)
 
