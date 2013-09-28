@@ -20,7 +20,7 @@ before_script:
       'persistent' => false,
       'host' => '127.0.0.1',
       'login' => 'travis',
-      'database' => 'scribble',
+      'database' => 'scribble_test',
       'prefix' => ''
     );
     }" > app/Config/database.php
