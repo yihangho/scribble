@@ -19,3 +19,10 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# Behat Related #
+#################
+behat/bin
+behat/vendor
+behat/composer.phar
+behat/composer.lock

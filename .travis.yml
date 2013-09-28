@@ -3,19 +3,27 @@ language: php
 php:
   - 5.5
 
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - composer self-update
+  - sudo apt-get update
+
 install:
-  - pear channel-discover pear.cakephp.org
-  - pear install cakephp/CakePHP_CodeSniffer
-  - phpenv rehash
+  - cd behat
+  - composer install
+  - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar
+  - sudo apt-get install apache2 libapache2-mod-php5
+  - cd ..
 
 before_script:
-  - mysql -u travis -e "CREATE DATABASE scribble_test;"
+  - mysql -u travis -e "CREATE DATABASE scribble;"
+  - mysql -u travis -e "USER scribble; CREATE TABLE IF NOT EXISTS `scribbles` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT,`user_id` int(11) DEFAULT NULL,`title` varchar(255) NOT NULL,`body` longtext NOT NULL,`ukey` varchar(255) NOT NULL,`short_link` varchar(255) NOT NULL,`created` datetime NOT NULL,`modified` datetime NOT NULL,PRIMARY KEY (`id`),UNIQUE KEY `ukey` (`ukey`));CREATE TABLE IF NOT EXISTS `users` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT,`email` varchar(255) NOT NULL,`remember_token` varchar(255) DEFAULT NULL,`created` datetime NOT NULL,`modified` datetime NOT NULL,PRIMARY KEY (`id`),UNIQUE KEY `email` (`email`),UNIQUE KEY `remember_token` (`remember_token`));"
   - mkdir app/tmp
   - chmod -R 777 app/tmp
-  - chmod +x phpunit_autorun.sh
   - echo "<?php
     class DATABASE_CONFIG {
-    public \$test = array(
+    public \$default = array(
       'datasource' => 'Database/Mysql',
       'persistent' => false,
       'host' => '127.0.0.1',
@@ -24,8 +32,15 @@ before_script:
       'prefix' => ''
     );
     }" > app/Config/database.php
+  - sudo sed -i -e "s,/var/www,$(pwd),g" /etc/apache2/sites-available/default
+  - sudo sed -i -e "/DocumentRoot/i\ServerName www.scribble.loc" /etc/apache2/sites-available/default
+  - echo "127.0.0.1 www.scribble.loc" | sudo tee -a /etc/hosts
+  - sudo /etc/init.d/apache2 restart
+  - cd behat
+  - java -jar selenium-server-standalone-2.35.0.jar &
+  - cd ..
+  - sleep 10
 
 script:
-  - ./phpunit_autorun.sh
-  - phpcs -n --standard=CakePHP app/Controller
-  - phpcs -n --standard=CakePHP app/Model
+  - cd behat
+  - bin/behat
