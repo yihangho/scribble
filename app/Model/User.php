@@ -27,7 +27,7 @@ class User extends AppModel {
 		}
 		$rememberToken = sha1(mt_rand() . '' . mt_rand());
 		$this->id = $id;
-		$this->set('remember_token', $rememberToken);
+		$this->set('remember_token', sha1($rememberToken));
 		$this->save();
 		return $rememberToken;
 	}

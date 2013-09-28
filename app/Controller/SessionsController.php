@@ -75,7 +75,7 @@ class SessionsController extends AppController {
 		$rememberToken = $this->User->newRememberToken($user["User"]["id"]);
 
 		// Set the new remember_token to cookie
-		$this->Cookie->write('remember_token', $rememberToken, true, '20 years');
+		$this->Cookie->write('remember_token', $rememberToken, false, '20 years');
 
 		//Set current user
 		$this->currentUser = $user;

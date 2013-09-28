@@ -42,7 +42,7 @@ class AppController extends Controller {
 		$this->currentUser = false;
 		if ($rememberToken) {
 			$this->currentUser = $this->User->find('first', array('conditions' => array(
-			'User.remember_token' => $rememberToken
+			'User.remember_token' => sha1($rememberToken)
 			)));
 		}
 		$this->set('loggedIn', !!$this->currentUser);
