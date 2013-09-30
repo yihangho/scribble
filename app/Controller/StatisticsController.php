@@ -7,7 +7,7 @@ class StatisticsController extends AppController {
 		}
 		$statistics = $this->Statistic->find('all', array('order' => array('created ASC')));
 		$output = array();
-		foreach($statistics as $s) {
+		foreach ($statistics as $s) {
 			$output[] = array(new DateTime($s["Statistic"]["created"]), $s["Statistic"]["value"]);
 		}
 		$this->set('statistics', $output);
