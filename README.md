@@ -6,6 +6,7 @@ Scribble 2.0 is powered by the following open source libraries/projects:
 
 - [Animate.css](https://github.com/daneden/animate.css)
 - [Bootstrap](http://getbootstrap.com/)
+- [Google Charts](https://developers.google.com/chart/)
 - [jQuery.caret.js](https://github.com/garyharan/jQuery-caret-utilities)
 - [jQuery](http://jquery.com/)
 - [MathJax](http://www.mathjax.org/)
