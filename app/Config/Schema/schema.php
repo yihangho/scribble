@@ -24,9 +24,21 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
+	public $statistics = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'value' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+		),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
+
 	public $users = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
 		'email' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'admin' => array('type' => 'boolean', 'null' => true, 'default' => '0'),
 		'remember_token' => array('type' => 'string', 'null' => true, 'default' => null, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
