@@ -7,7 +7,7 @@
 		dataTable.addColumn('date', 'Date');
 		dataTable.addColumn('number', 'Count');
 		<?php foreach($statistics as $s):?>
-		dataTable.addRow([new Date(<?php echo $s[0]->format("Y");?>, <?php echo $s[0]->format("m")-1;?>, <?php echo $s[0]->format("d");?>), <?php echo $s[1];?>]);
+		dataTable.addRow([new Date('<?php echo $s[0];?>'), <?php echo $s[1];?>]);
 		<?php endforeach;?>
 		var dataView = new google.visualization.DataView(dataTable);
 		var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
