@@ -8,24 +8,6 @@ install:
   - pear install cakephp/CakePHP_CodeSniffer
   - phpenv rehash
 
-before_script:
-  - mysql -u travis -e "CREATE DATABASE scribble_test;"
-  - mkdir app/tmp
-  - chmod -R 777 app/tmp
-  - chmod +x phpunit_autorun.sh
-  - echo "<?php
-    class DATABASE_CONFIG {
-    public \$test = array(
-      'datasource' => 'Database/Mysql',
-      'persistent' => false,
-      'host' => '127.0.0.1',
-      'login' => 'travis',
-      'database' => 'scribble_test',
-      'prefix' => ''
-    );
-    }" > app/Config/database.php
-
 script:
-  - ./phpunit_autorun.sh
   - phpcs -n --standard=CakePHP app/Controller
   - phpcs -n --standard=CakePHP app/Model
