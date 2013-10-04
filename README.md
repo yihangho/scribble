@@ -26,6 +26,10 @@ I am not very sure if these are strictly required - chances are they don't. Howe
 ## Change Log
 This change log will only record the changes between versions pushed to production. As a result, there will be quite a few commits in between them. Refer to individual commit for more information.
 
+- October 4, 2013 (abdef58732a916f7e015258c3fab0fcaab3995f9)
+
+  - Add cronjob to update and record amount of Scribbles
+
 - September 27, 2013 (77aff3013f8ca53c21254d22a076fe14befb3ced)
 
   - Users are now able to login via Facebook or Google+
