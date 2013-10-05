@@ -35,7 +35,7 @@ Router::parseExtensions('json');
 	Router::connect('/logout', array('controller' => 'sessions', 'action' => 'destroy'));
 	Router::connect('/fb_login', array('controller' => 'sessions', 'action' => 'fbLogin'));
 	Router::connect('/google_plus_login', array('controller' => 'sessions', 'action' => 'googlePlusLogin'));
-	Router::connect('/mine', array('controller' => 'Users', 'action' => 'listScribbles'));
+	Router::connect('/mine/*', array('controller' => 'Users', 'action' => 'listScribbles'));
 	Router::connect('/admin/statistics', array('controller' => 'Statistics', 'action' => 'index'));
 	Router::connect('/', array('controller' => 'Scribbles', 'action' => 'add'));
 	Router::connect('/*', array('controller' => 'Scribbles', 'action' => 'view'));
