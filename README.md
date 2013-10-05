@@ -26,6 +26,10 @@ I am not very sure if these are strictly required - chances are they don't. Howe
 ## Change Log
 This change log will only record the changes between versions pushed to production. As a result, there will be quite a few commits in between them. Refer to individual commit for more information.
 
+- October 5, 2013 (3c4e86b67e400977013c8e26578d11a41b060426)
+
+  - Mine page now can paginate
+
 - October 4, 2013 (abdef58732a916f7e015258c3fab0fcaab3995f9)
 
   - Add cronjob to update and record amount of Scribbles
