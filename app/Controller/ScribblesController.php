@@ -40,7 +40,7 @@ class ScribblesController extends AppController {
 
 		if ($this->request->is("post") || $this->request->is("put")) {
 			$this->Scribble->id = $scribble["Scribble"]["id"];
-			if ($this->Scribble->save($this->request->data, array("fieldList" => array("title", "body")))) {
+			if ($scribble["Scribble"]["read_only"] || $this->Scribble->save($this->request->data, array("fieldList" => array("title", "body")))) {
 				if ($jsonRequest) {
 					$this->set("status", "OK");
 				} else {

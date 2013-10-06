@@ -15,6 +15,7 @@ class AppSchema extends CakeSchema {
 		'body' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'ukey' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'short_link' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'read_only' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
