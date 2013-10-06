@@ -20,7 +20,9 @@ $(document).ready(function(){
 <div id="ScribbleBuffer" class="well well-lg" style="display:none;"></div>
 <div id="ajax_status"></div>
 <?php
-echo $this->element("scribble-input-form", array("edit" => true, "prevent_default" => true));
+if (!$scribble["Scribble"]["read_only"]) {
+	echo $this->element("scribble-input-form", array("edit" => true, "prevent_default" => true));
+}
 $form_data = $this->Js->get('#ScribbleViewForm')->serializeForm(array('isForm' => true, 'inline' => true));
 $this->Js->get('#ScribbleViewForm')->event(
           'submit',
@@ -28,7 +30,7 @@ $this->Js->get('#ScribbleViewForm')->event(
             array('action' => 'view', $scribble["Scribble"]["ukey"].".json"),
             array(
                     'data' => $form_data,
-                    'async' => true,    
+                    'async' => true,
                     'dataExpression'=>true,
                     'method' => 'POST',
                     'dataType' => 'json',
