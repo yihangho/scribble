@@ -26,6 +26,10 @@ I am not very sure if these are strictly required - chances are they don't. Howe
 ## Change Log
 This change log will only record the changes between versions pushed to production. As a result, there will be quite a few commits in between them. Refer to individual commit for more information.
 
+- October 6, 2013 (3321b6defde7850ff483cd6260614d4f3492b64d)
+
+  - Enable Scribbles to be read-only, but this feature is accessible only from the back-end at the moment
+
 - October 5, 2013 (3c4e86b67e400977013c8e26578d11a41b060426)
 
   - Mine page now can paginate
