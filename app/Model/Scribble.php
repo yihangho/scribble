@@ -27,8 +27,11 @@ class Scribble extends AppModel {
 		}
 
 		if (!array_key_exists("id", $this->data["Scribble"]) || empty($this->findById($this->data["Scribble"]["id"])["short_link"])) {
-			// TODO Include API key
-			$curl = curl_init("https://www.googleapis.com/urlshortener/v1/url");
+			if ($_ENV['GOOGLE_API_KEY']) {
+				$curl = curl_init("https://www.googleapis.com/urlshortener/v1/url?key=" . $_ENV['GOOGLE_API_KEY']);
+			} else {
+				$curl = curl_init("https://www.googleapis.com/urlshortener/v1/url");
+			}
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
