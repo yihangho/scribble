@@ -78,7 +78,5 @@ $cakeDescription = __d('cake_dev', 'Scribble 2.0');
 			<?php echo $this->fetch('content'); ?>
 		</div>
 	</div>
-	<?php echo $this->Js->writeBuffer(); ?>
-	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>
