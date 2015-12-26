@@ -112,8 +112,8 @@ CakeLog::config('error', array(
  * Configure API keys
  * DO NOT commit your API keys
  */
-// Configure::write('FB_API', 'XXXXXXXXXXXXXXX');
-// Configure::write('FB_SECRET', 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+Configure::write('FB_API', $_ENV['FACEBOOK_APP_ID']);
+Configure::write('FB_SECRET', $_ENV['FACEBOOK_APP_SECRET']);
 Configure::write('GOOGLE_API', $_ENV['GOOGLE_CLIENT_ID']);
 Configure::write('GOOGLE_SECRET', $_ENV['GOOGLE_CLIENT_SECRET']);
 // Configure::write('TWITTER_API', 'XXXXXXXXXXXXXXXXXXXXXX');
