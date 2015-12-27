@@ -23,10 +23,10 @@ class FacebookAuthComponent extends Component {
 
 	public function getEmailAddress($accessToken) {
 		$httpSocket = new HttpSocket();
-		$fbGetEmailAddressRequest = 'https://graph.facebook.com/fql?q=SELECT+email+FROM+user+WHERE+uid=me()&access_token=' . $accessToken;
+		$fbGetEmailAddressRequest = 'https://graph.facebook.com/v2.5/me?fields=email&access_token=' . $accessToken;
 		$fbEmailAddressResponse = json_decode($httpSocket->get($fbGetEmailAddressRequest), true);
-		if (array_key_exists("data", $fbEmailAddressResponse) && array_key_exists("email", $fbEmailAddressResponse["data"][0])) {
-			return $fbEmailAddressResponse["data"][0]["email"];
+		if (array_key_exists("email", $fbEmailAddressResponse)) {
+			return $fbEmailAddressResponse["email"];
 		} else {
 			return false;
 		}
